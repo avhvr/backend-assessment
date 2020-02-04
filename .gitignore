@@ -102,3 +102,6 @@ ENV/
 # vim files
 *.swp
 data
+
+# vs-code
+.vscode/
