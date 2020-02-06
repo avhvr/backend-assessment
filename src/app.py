@@ -3,12 +3,15 @@ from flask import Flask
 import os
 import logging.config
 import mongoengine
+from tasks import make_celery
 
 
 application = Flask(os.environ.get("APPLICATION_NAME"))
 SETTINGS_FILE = os.environ.get("SETTINGS_FILE", "settings.local_settings")
 
 application.config.from_object(SETTINGS_FILE)
+
+celery = make_celery(application)
 
 with application.app_context():
     # this loads all the views with the app context

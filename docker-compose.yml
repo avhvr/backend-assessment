@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-  
+
   # database service
   db:
     image: mongo:3.6
@@ -28,5 +28,21 @@ services:
       - ./logs:/var/log/scaffolding
     ports:
       - "8400:5000"
+    depends_on:
+      - db
+      - celery
+
+  # celery worker service for flask application
+  celery:
+    image: flask-scaffolding:assessment
+    env_file:
+      local.env
+    command: >
+      /bin/ash -c "
+      celery worker -A app.celery --loglevel=info
+      "
+    volumes:
+      - ./src/:/code
+      - ./logs:/var/log/scaffolding
     depends_on:
       - db

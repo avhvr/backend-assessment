@@ -39,3 +39,15 @@ MONGO_SETTINGS = {
     'DB_USERNAME': os.environ.get('DB_USERNAME'),
     'DB_PASSWORD': os.environ.get('DB_PASSWORD'),
 }
+
+CELERY_SETTINGS = {
+    'BROKER' : f"{os.environ.get('DB_TRANSPORT')}://{os.environ.get('DB_HOST')}:{os.environ.get('DB_PORT')}/{os.environ.get('DB_NAME')}",
+}
+
+CELERY_RESULT_BACKEND = os.environ.get('DB_TRANSPORT')
+CELERY_MONGODB_BACKEND_SETTINGS = {
+    'host': os.environ.get('DB_HOST'),
+    'port': os.environ.get('DB_PORT'),
+    'database': os.environ.get('DB_NAME'),
+    'taskmeta_collection': os.environ.get('DB_TASK_COLLECTION'),
+}
