@@ -2,14 +2,7 @@
 
 ***Code Navigation***
 
-This project consists of a main folder `src` which contains all the project files. The files outside the source folder consists of `docker-compose.yml`, `Dockerfile` and a `local.env` file which are used for running the docker containers. The `src` folder contains the entrypoint of the Flask project `app.py`, `settings` folder which contains your application settings and an `apis` folder that stores all your urls and views.
-
-Specify the urls in `urls.py` file in the api folder as list of tuples with following format:
-
-    (endpoint, view_func, methods, description)
-example:
-
-    ("/", views.index, ["GET"], "index page")
+This project consists of a main folder `src` which contains all the project files. The files outside the source folder consists of `docker-compose.yml`, `Dockerfile` and a `local.env` file which are used for running the docker containers. The `src` folder contains the entrypoint of the Flask project `app.py`, `settings` folder which contains your application settings and an `apis` folder that stores all your urls and views. The `tasks` folder contains the tasks.
 
 ***Installation***
 
@@ -42,3 +35,15 @@ Make sure that all the api only logic should go in api layer (i.e. views.py) and
 Schema goes in the models/user.py file.
 
 Refer docstrings in the above mentioned files.
+
+***Testing***
+
+Using cURL:
+
+    # First create a test user: johndoe
+    curl -i -X POST -H 'Content-Type: application/json' -d '{"username":"johndoe","password":"iamjohndoe"}' http://localhost:8400/register
+
+    # Login with test user:johndoe
+    curl -i -X POST -H 'Content-Type: application/json' -d '{"username":"johndoe","password":"iamjohndoe"}' http://localhost:8400/login
+
+The Login and register routes accept json data and respond accordingly with respective http status codes.
