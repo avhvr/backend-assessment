@@ -1,6 +1,6 @@
 import logging
 from models import User
-from flask import jsonify
+from flask import jsonify, g
 from tasks import user_task
 
 logger = logging.getLogger("default")
@@ -12,7 +12,7 @@ class UserService(object):
     """
 
     @staticmethod
-    def login_user(data):
+    def login_user():
         """
         TASKS: write the logic here for user login
                authenticate user credentials as per your
@@ -20,9 +20,9 @@ class UserService(object):
 
                raise appropriate errors wherever necessary
         """
-        if data:
-            username = data.get('username')
-            password = data.get('password')
+        if g.data:
+            username = g.data.get('username')
+            password = g.data.get('password')
             if username and password:
                 user = User.objects(username=username).first()
                 if user is not None and user.verify_password(password):
@@ -44,15 +44,15 @@ class UserService(object):
 
 
     @staticmethod
-    def register_user(data):
+    def register_user():
         """
         TASKS: write the logic here for registering new user.
 
                raise appropriate errors wherever necessary
         """
-        if data:
-            username = data.get('username')
-            password = data.get('password')
+        if g.data:
+            username = g.data.get('username')
+            password = g.data.get('password')
             if username and password:
                 user = User.objects(username=username).first()
                 if user is None:
