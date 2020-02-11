@@ -41,7 +41,7 @@ MONGO_SETTINGS = {
 }
 
 CELERY_SETTINGS = {
-    'BROKER' : f"{os.environ.get('DB_TRANSPORT')}://{os.environ.get('DB_HOST')}:{os.environ.get('DB_PORT')}/{os.environ.get('DB_NAME')}",
+    'BROKER' : f"{os.environ.get('BROKER_TRANSPORT')}://{os.environ.get('BROKER_HOST')}:{os.environ.get('BROKER_PORT')}",
 }
 
 CELERY_RESULT_BACKEND = os.environ.get('DB_TRANSPORT')

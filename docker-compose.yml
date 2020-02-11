@@ -11,6 +11,30 @@ services:
       - ./data/mongodb:/data/db
     command: --smallfiles
 
+  # message queue service
+  rabbitmq:
+    image: rabbitmq:3-alpine
+    ports:
+      - "5672:5672"
+    volumes:
+      - ./data/rabbitmq:/var/lib/rabbitmq
+
+  # celery worker service for flask application
+  celery:
+    image: flask-scaffolding:assessment
+    env_file:
+      local.env
+    command: >
+      /bin/ash -c "
+      celery worker -A app.celery --loglevel=info
+      "
+    volumes:
+      - ./src/:/code
+      - ./logs:/var/log/scaffolding
+    depends_on:
+      - db
+      - rabbitmq
+
   # web service for flask application
   web:
     build:
@@ -31,18 +55,4 @@ services:
     depends_on:
       - db
       - celery
-
-  # celery worker service for flask application
-  celery:
-    image: flask-scaffolding:assessment
-    env_file:
-      local.env
-    command: >
-      /bin/ash -c "
-      celery worker -A app.celery --loglevel=info
-      "
-    volumes:
-      - ./src/:/code
-      - ./logs:/var/log/scaffolding
-    depends_on:
-      - db
+      - rabbitmq
