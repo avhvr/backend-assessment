@@ -36,6 +36,10 @@ Schema goes in the models/user.py file.
 
 Refer docstrings in the above mentioned files.
 
+***Tasks***
+
+Celery is used for running the Asynchronous tasks. It is setup to use RabbitMQ as message broker and MongoDB as results backend. Tasks can be found in the `tasks` i.e inside the `src` folder.
+
 ***Testing***
 
 Using cURL:
